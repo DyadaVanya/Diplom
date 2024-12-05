@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Авторизация</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f7debe;
+    }
+    .login-container {
+        background: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 300px;
+    }
+    .login-input {
+        width: 90%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .submit-button {
+        background-color: #e04e0a;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+
+    .submit-button2 {
+        background-color: #e04e0a;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+
+    .submit-button:hover {
+        background-color: #18df39;
+    }
+
+    .submit-button2:hover {
+        background-color: #18df39;
+    }
+
+    .vk-button {
+        background-color: #4B8BF4;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+    .vk-button:hover {
+        background-color: #3B7BD4;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-container">
+  <h2>Авторизация</h2>
+
+  <!-- Форма для логина и пароля -->
+  <input type="text" class="login-input" id="username" placeholder="Логин" required>
+  <input type="password" class="login-input" id="password" placeholder="Пароль" required>
+  <button class="submit-button" onclick="login()">Войти</button>
+  <p></p>
+  <button class="submit-button2" onclick="login()">Зарегистрироваться</button>
+
+  <hr>
+
+  <!-- Кнопка для авторизации через ВКонтакте -->
+  <button class="vk-button" onclick="loginWithVK()">Войти через VK</button>
+</div>
+
+<script>
+  function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // Здесь вы должны добавить логику для отправки логина и пароля на сервер
+      console.log('Логин:', username);
+      console.log('Пароль:', password);
+
+      // Пример отправки данных на сервер (необходимо настроить серверную часть)
+      /*
+      fetch('YOUR_SERVER_ENDPOINT', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username, password })
+      })
+      .then(response => response.json())
+      .then(data => {
+          // Обработка ответа от сервера
+          console.log(data);
+      })
+      .catch(error => {
+          console.error('Ошибка:', error);
+      });
+      */
+  }
+
+  function loginWithVK() {
+      const appId = 'YOUR_APP_ID'; // Замените на ваш ID приложения
+      const redirectUri = 'YOUR_REDIRECT_URI'; // Замените на ваш URI перенаправления
+      const scope = 'email'; // Укажите необходимые разрешения
+
+      const vkAuthUrl = `https://oauth.vk.com/authorize?client_id=${appId}&display=page&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope}&response_type=token&v=5.131`;
+
+      window.location.href = vkAuthUrl;
+  }
+</script>
+
+</body>
+</html>

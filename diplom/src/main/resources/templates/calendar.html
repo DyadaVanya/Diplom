@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Календарь</title>
+    <link type="text/css" rel="stylesheet" href="styles/Cal.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+</head>
+<body>
+<div class="calendar-container">
+    <header class="calendar-header">
+        <p class="calendar-current-date"></p>
+        <div class="calendar-navigation">
+            <span id="calendar-prev" class="material-symbols-rounded">chevron_left</span>
+            <span id="calendar-next" class="material-symbols-rounded">chevron_right</span>
+        </div>
+    </header>
+    <div class="calendar-body">
+        <ul class="calendar-weekdays">
+            <li>Вс</li>
+            <li>Пн</li>
+            <li>Вт</li>
+            <li>Ср</li>
+            <li>Чт</li>
+            <li>Пт</li>
+            <li>Сб</li>
+        </ul>
+        <ul class="calendar-dates"></ul>
+    </div>
+</div>
+<script type="text/javascript" src="js/Cal.js">
+    let currDate = new Date();
+let currMonth = currDate.getMonth();
+let currYear = currDate.getFullYear();
+let months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+
+const calendarBody = document.querySelector('.calendar-body');
+const calendarDates = document.querySelector('.calendar-dates');
+const calendarCurrentDate = document.querySelector('.calendar-current-date');
+const prevMonthBtn = document.getElementById('calendar-prev');
+const nextMonthBtn = document.getElementById('calendar-next');
+
+function renderCalendar() {
+    let firstDayOfMonth = new Date(currYear, currMonth, 1);
+    let lastDayOfMonth = new Date(currYear, currMonth + 1, 0);
+    let firstDayOfWeek = firstDayOfMonth.getDay();
+    let lastDayofMonth = lastDayOfMonth.getDate();
+
+    let liTag = '';
+    let date = 1;
+
+    for (let i = firstDayOfWeek; i > 0; i--) {
+        liTag += `<li class="inactive">${lastDayofMonth - i + 1}</li>`;
+    }
+
+    for (let i = 1; i <= lastDayofMonth; i++) {
+        let isToday = (i === currDate.getDate() && currMonth === new Date().getMonth() && currYear === new Date().getFullYear()) ? 'active' : '';
+        liTag += `<li class="${isToday}">${i}</li>`;
+    }
+
+    for (let i = lastDayofMonth; i < 6; i++) {
+        liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`;
+    }
+
+    calendarCurrentDate.innerText = `${months[currMonth]} ${currYear}`;
+    calendarDates.innerHTML = liTag;
+}
+
+renderCalendar();
+
+prevMonthBtn.addEventListener('click', () => {
+    if (currMonth === 0) {
+        currMonth = 11;
+        currYear--;
+    } else {
+        currMonth--;
+    }
+    renderCalendar();
+});
+
+nextMonthBtn.addEventListener('click', () => {
+    if (currMonth === 11) {
+        currMonth = 0;
+        currYear++;
+    } else {
+        currMonth++;
+    }
+    renderCalendar();
+});
+</script>
+</body>
+</html>
